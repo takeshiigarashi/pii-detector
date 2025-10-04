@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>PII Detector</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">PII Detector</h1>
+    <form action="#" th:action="@{/detect}" method="post" class="mb-4">
+        <div class="mb-3">
+            <label class="form-label">Select Model:</label>
+            <div>
+                <input type="radio" id="ja_ginza" name="modelName" value="ja_ginza" th:checked="${modelName == 'ja_ginza'}">
+                <label for="ja_ginza">ja_ginza</label>
+            </div>
+            <div>
+                <input type="radio" id="ja_ginza_electra" name="modelName" value="ja_ginza_electra" th:checked="${modelName == 'ja_ginza_electra'}">
+                <label for="ja_ginza_electra">ja_ginza_electra</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="inputText" class="form-label">Enter text:</label>
+            <textarea id="inputText" name="inputText" class="form-control" rows="4" th:text="${inputText}"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Detect</button>
+    </form>
+
+    <div th:if="${result}">
+        <h2 class="mb-3">Detection Result:</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>surface</th>
+                    <th>lemma</th>
+                    <th>idx</th>
+                    <th>pos</th>
+                    <th>tag</th>
+                    <th>ent_type</th>
+                    <th>is_alpha</th>
+                    <th>is_digit</th>
+                    <th>is_punct</th>
+                    <th>is_stop</th>
+                    <th>is_credit_card</th>
+                    <th>is_email</th>
+                    <th>is_phone_number</th>
+                </tr>
+            </thead>   
+            <tbody>
+                <tr th:each="token : ${result.tokens}">
+                    <td th:text="${token.surface}">Token surface</td>
+                    <td th:text="${token.lemma}">Token lemma</td>
+                    <td th:text="${token.idx}">Token idx</td>
+                    <td th:text="${token.pos}">Token pos</td>
+                    <td th:text="${token.tag}">Token tag</td>
+                    <td th:text="${token.entType}">Token ent_type</td>
+                    <td th:text="${token.alpha}">Token is_alpha</td>
+                    <td th:text="${token.digit}">Token is_digit</td>
+                    <td th:text="${token.punct}">Token is_punct</td>
+                    <td th:text="${token.stop}">Token is_stop</td>
+                    <td th:text="${token.creditCard}">Token is_credit_card</td>
+                    <td th:text="${token.email}">Token is_email</td>
+                    <td th:text="${token.phoneNumber}">Token is_phone_number</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
