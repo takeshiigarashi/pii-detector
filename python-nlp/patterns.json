@@ -1,0 +1,17 @@
+[
+    {
+        "id": "credit_card",
+        "patterns": ["\\d{4}-\\d{4}-\\d{4}-\\d{4}"],
+        "extension_key": "is_credit_card"
+    },
+    {
+        "id": "email",
+        "patterns": ["[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"],
+        "extension_key": "is_email"
+    },
+    {
+        "id": "phone_number",
+        "patterns": ["0\\d{1,4}-\\d{1,4}-\\d{4}"],
+        "extension_key": "is_phone_number"
+    }
+]
