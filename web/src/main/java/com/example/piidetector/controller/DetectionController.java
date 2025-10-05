@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.piidetector.service.NlpClientConst;
-import com.example.piidetector.service.NlpClientService;
+import com.example.piidetector.service.PiiMaskingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.GetMapping;
-
 
 @Controller
 public class DetectionController {
     private final static Logger logger = LoggerFactory.getLogger(DetectionController.class);
-    private final NlpClientService nlpClientService;
+
+    private final PiiMaskingService piiMaskingService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public DetectionController(NlpClientService nlpClientService) {
-        this.nlpClientService = nlpClientService;
+    public DetectionController(PiiMaskingService piiMaskingService) {
+        this.piiMaskingService = piiMaskingService;
     }
     
     @GetMapping("/detect")
@@ -33,7 +33,7 @@ public class DetectionController {
     public String detect(@RequestParam("modelName") String modelName, @RequestParam("inputText") String inputText, Model model) {
 
         // NLPサービスを呼び出す
-        var result = nlpClientService.analyzeText(modelName, inputText);
+        var result = piiMaskingService.maskPii(modelName, inputText);
 
         try {
             logger.debug("NLP Result: {}", objectMapper.writeValueAsString(result));
